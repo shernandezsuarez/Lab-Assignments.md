@@ -1,0 +1,18 @@
+### I wanted to change the graph's y-axis numbers from thousands to the letter k so it looked more concise and compact
+### I researched how I could do that and got "from matplotlib.ticker import FuncFormatter"
+### I also wanted to change the color of the bars
+from matplotlib.ticker import FuncFormatter
+plt.figure(figsize=(10, 6))
+<Figure size 2000x1200 with 0 Axes>
+plt.bar(genome_counts.index, genome_counts.values, color='skyblue')
+<BarContainer object of 9 artists>
+plt.xlabel("Major lineage")
+Text(0.5, 0, 'Major lineage')
+plt.ylabel("Number of genomes")
+Text(0, 0.5, 'Number of genomes')
+plt.title("Number of genomes for each major lineage")
+Text(0.5, 1.0, 'Number of genomes for each major lineage')
+plt.xticks(rotation=45)
+([0, 1, 2, 3, 4, 5, 6, 7, 8], [Text(0, 0, 'bacteria'), Text(1, 0, 'viral'), Text(2, 0, 'archaea'), Text(3, 0, 'fungi'), Text(4, 0, 'vertebrate_other'), Text(5, 0, 'invertebrate'), Text(6, 0, 'vertebrate_mammalian'), Text(7, 0, 'plant'), Text(8, 0, 'protozoa')])
+plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, pos: f"{x/1000:.0f}K"))
+plt.show()
