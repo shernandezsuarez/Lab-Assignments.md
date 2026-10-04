@@ -1,0 +1,32 @@
+total_gene_count <- (
++   g_data$protein_coding_gene_count +
++   g_data$non_coding_gene_count
++ )
+> coding_proportion <- (
++   g_data$protein_coding_gene_count /
++   total_gene_count
++ )
+> 
+> groups <- sort(unique(g_data$group))
+> group_colors <- rainbow(length(groups))
+> densities <- lapply(groups, function(group) {
++   group_data <- coding_proportion[g_data$group == group]
++   group_data <- group_data[is.finite(group_data)]
++   density(group_data)
++ })
+> y_max <- max(sapply(densities, function(d) max(d$y)))
+> 
+> plot(NULL, xlim = c(0.87, 1), ylim = c(0, y_max), xlab = "Proportion of protein-coding genes", ylab = "Density", main = "Protein-coding gene proportion by group")
+> for (i in seq_along(groups)) {
++   lines(
++     densities[[i]],
++     col = group_colors[i],
++     lwd = 2
++   )
++ }
+> legend(
++   "topleft",
++   legend = groups,
++   col = group_colors,
++   lwd = 2
++ )
