@@ -1,0 +1,71 @@
+### For this exercise I downloaded Zebrafish (Danio Rerio) genomic data
+
+### fetch 16S rRNA sequences from Genus Danio records
+esearch -db nuccore -query \
+  '"Danio"[Organism] AND ("16S ribosomal RNA"[Title] OR rrnL[Gene] OR 16S[Gene]) NOT ("12S"[Title] OR COI[Title] OR COIII[Title] OR cytb[Title] OR "complete genome"[Title] OR "whole genome"[Title] OR NADH[Title])' \
+  | efetch -format fasta > Danio_16S_rRNA.fasta
+
+### count the # of sequences downloaded
+grep -c '^>' Danio_16S_rRNA.fasta
+
+### check the sequences
+cat Danio_16S_rRNA.fasta
+
+### set the accession number of the danio rerio reference genome
+accession=GCF_000002035.6
+
+### download the reference genome 
+datasets download genome accession "$accession" \
+  --include gff3,rna,cds,protein,genome,seq-report \
+  --filename "${accession}.zip"
+
+### extracting archive into a new directory
+unzip -n GCF_000002035.6.zip -d GCF_000002035.6
+
+### see the Danio Regio reference genome data
+ls -lh GCF_000002035.6/ncbi_dataset/data/GCF_000002035.6/
+output: total 2.6G
+
+###1. RNA sequences:
+ grep -c '^>' GCF_000002035.6/ncbi_dataset/data/GCF_000002035.6/rna.fna
+##output: 68239
+
+###2. DNA sequences:
+grep -c '^>' GCF_000002035.6/ncbi_dataset/data/GCF_000002035.6/cds_from_genomic.fna
+##output: 58095
+
+###3. Protein Sequences:
+unzip grep -c '^>' GCF_000002035.6/ncbi_dataset/data/GCF_000002035.6/protein.faa
+##output: 53509
+
+### STEP 3: I had to download a new dataset that wasn't so big since I didnt have enough storage to use the first dataset for this part. 
+
+mkdir -p ~/Danio_r_raw_reads
+cd ~/Danio_r_raw_reads
+
+### I used AI to get a new less dense data set so that I could work with it.
+### Downloading new set:
+prefetch ERR338827
+
+### fetch FASTQ reads for new data
+ # AI advised me to use "-- split files" because the zebrafish dataset contained pair-end sequencing reads
+fasterq-dump ERR338827/ERR338827.sra --split-files
+
+### count the number of reads 
+wc -l < ERR338827_1.fastq | awk '{print $1/4}'
+wc -l < ERR338827_2.fastq | awk '{print $1/4}'
+
+### seeing content 
+less ERR338827_1.fastq
+
+### compressing files to reduce disk space usage
+gzip ERR338827_1.fastq &
+gzip ERR338827_2.fastq &
+
+### see the contents of the compressed file
+gzip -dc ERR338827_1.fastq.gz | less
+ 
+### counting the number of reads of compressed file
+gzip -dc ERR338827_1.fastq.gz | wc -l | awk '{print $1/4}'
+ gzip -dc ERR338827_2.fastq.gz | wc -l | awk '{print $1/4}'
+
