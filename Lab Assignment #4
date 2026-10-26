@@ -1,0 +1,24 @@
+### creating conda python environment
+conda --version
+which conda
+conda create -n bioinformatics python=3.14.7
+### activating, installing, deactivating
+conda activate bioinformatics
+conda install bioconda::fastp
+conda deactivate
+
+###skipped retrieving steps because I am using last assignment's Zebrafish database
+
+## Run fastp
+cd ~
+conda activate bioinformatics
+cd Danio_r_raw_reads
+fastp -i ERR338827_1.fastq.gz -I ERR338827_2.fastq.gz -o ERR338827_1_trimmed.fastq.gz -O ERR338827_2_trimmed.fastq.gz --detect_adapter_for_pe -h paired_fastp_report_ERR338827.html
+## counting reads
+gzip -dc ERR338827_1.fastq.gz | wc -l | awk '{print $1/4}'
+gzip -dc ERR338827_2.fastq.gz | wc -l | awk '{print $1/4}'
+conda deactivate
+exit
+
+## Getting fastq report
+scp shernandezs@erdos.dsm.fordham.edu:/u/erdos/students/shernandezs/Danio_r_raw_reads/paired_fastp_report_ERR338827.html ~/
