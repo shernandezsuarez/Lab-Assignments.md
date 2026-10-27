@@ -1,0 +1,17 @@
+cd ~
+cp -r /u/erdos/jbarba/public/mafft-7.526-linux.tgz .
+tar xfvz mafft-7.526-linux.tgz
+mkdir mafft_16s_rrna_gene_msa
+cd mafft_16s_rrna_gene_msa
+
+### skipped fetching because I am using last Assignment's Danio (Zebrafish) Data
+
+find ~ -name "Danio_16S_rRNA.fasta"/u/erdos/students/shernandezs/Danio_16S_rRNA.fasta
+ cp ~/Danio_16S_rRNA.fasta 16s_rrna_msa.fasta
+### count # of sequences
+grep -c '^>' 16s_rrna_msa.fasta
+cat 16s_rrna_msa.fasta
+
+##mafft alignment
+
+/u/erdos/students/shernandezs/mafft-linux64/mafft.bat --auto 16s_rrna_msa.fasta > 16s_rrna_msa_mafft.fasta
