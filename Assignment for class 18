@@ -1,0 +1,30 @@
+1. Mystery Gene: Act79B
+
+Top match: Act79B (actin 79B) in Drosophila melanogaster
+
+Percent identity: 85.323%
+
+Alignment length: 1,131 bases
+
+E-value: 0.0
+
+Bit score: 1,170
+
+Conclusion: The high sequence identity, long alignment, and E-value of 0.0 strongly support an actin-family gene. Act79B was the top match, although other actin genes had similarly strong results.
+
+2. Mystery Protein: Actin 88F
+
+Top match: Actin 88F in Drosophila melanogaster
+
+Percent identity: 98.670%
+
+Alignment length: 376 amino acids
+
+E-value: 0.0
+
+Bit score: 780
+
+Conclusion: The high sequence identity and full-length alignment strongly support an actin protein. However, other actin proteins had nearly identical scores, so the exact identity is not conclusive.
+
+### I worked with the student Michelle Kordov for this assignment since my computer did not have battery during this class!
+
